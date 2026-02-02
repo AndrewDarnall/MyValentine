@@ -27,14 +27,14 @@ function moveNoButton(event) {
     const threshold = 150;
     
     if (distance < threshold) {
-        // Calculate new position
-        // Move in opposite direction from mouse
-        const angle = Math.atan2(distanceY, distanceX);
+        // Calculate angle from mouse to button (to move away from mouse)
+        // Since distanceX/Y = mouse - button, we need to negate to get button-to-mouse direction
+        const angleFromMouse = Math.atan2(-distanceY, -distanceX);
         const moveDistance = 100; // Distance to move away
         
         // Calculate new position relative to container
-        let newX = buttonCenterX - containerRect.left - Math.cos(angle) * moveDistance;
-        let newY = buttonCenterY - containerRect.top - Math.sin(angle) * moveDistance;
+        let newX = buttonCenterX - containerRect.left + Math.cos(angleFromMouse) * moveDistance;
+        let newY = buttonCenterY - containerRect.top + Math.sin(angleFromMouse) * moveDistance;
         
         // Add some randomness to make it more playful
         newX += (Math.random() - 0.5) * 50;
